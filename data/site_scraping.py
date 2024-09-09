@@ -1,10 +1,11 @@
 '''
 python script for scraping card data from Doomlings site
 '''
+import re
+
 from argparse import ArgumentParser
 from urllib import parse
 
-import re
 import requests
 
 from bs4 import BeautifulSoup, Tag
@@ -87,6 +88,15 @@ def retrieve_card_data(soup : BeautifulSoup):
     return card_data
 
 def retrieve_next_url(soup : BeautifulSoup, base_url : str):
+    """retrieves url to next card
+
+    Args:
+        soup (BeautifulSoup): _description_
+        base_url (str): _description_
+
+    Returns:
+        _type_: _description_
+    """
     next_block_soup : BeautifulSoup = soup.find(class_=find_class("next-block"))
     next_url_ref = next_block_soup.a["href"]
 
