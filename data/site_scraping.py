@@ -16,8 +16,10 @@ INVISIBLE_CLASS = "w-condition-invisible"
 parser = ArgumentParser(description="Scrapes card data from doomlings site")
 parser.add_argument("-url", "--starting_url", type=str, default=STARTING_URL,
                     help="URL to begin ingestion at")
-parser.add_argument("-i", "--images", action='store_true')
-parser.add_argument("-d", "--data", action='store_true')
+parser.add_argument("-i", "--images", action='store_true', help="Enable card image retrieval")
+parser.add_argument("-d", "--data", action='store_true', help="Enable card data retrieval")
+parser.add_argument("--image_dir", type=str, default="./images",
+                    help="Directory to download images to")
 args = parser.parse_args()
 
 def find_class(class_name):
@@ -32,7 +34,7 @@ def find_class(class_name):
 
     return _f
 
-def retrieve_card_image(soup : BeautifulSoup, download_dir = "./images", img_name = "default"):
+def retrieve_card_image(soup : BeautifulSoup, img_name = "default"):
     """Downloads image for card into given directory.
 
     Args:
@@ -53,7 +55,7 @@ def retrieve_card_image(soup : BeautifulSoup, download_dir = "./images", img_nam
         return False
 
     try:
-        with open(f"{download_dir}/{img_name}.jpg", "wb") as file:
+        with open(f"{args.image_dir}/{img_name}.jpg", "wb") as file:
             file.write(card_img_res.content)
     except OSError:
         print(f"Failed while saving picture for {img_name} from {card_img_url}")
