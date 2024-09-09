@@ -1,12 +1,12 @@
 '''
 python script for scraping card data from Doomlings site
 '''
+from argparse import ArgumentParser
 from urllib import parse
 
 import re
 import requests
 
-from argparse import ArgumentParser
 from bs4 import BeautifulSoup, Tag
 
 STARTING_URL = "https://www.worldofdoomlings.com/cards/echolocation"
